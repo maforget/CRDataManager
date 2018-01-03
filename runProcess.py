@@ -1,4 +1,4 @@
-﻿import System
+import System
 import System.Drawing
 import System.Windows.Forms
 import dmClasses

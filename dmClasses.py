@@ -1,4 +1,4 @@
-﻿import clr
+import clr
 import System
 import System.IO
 import dmGlobals
@@ -930,10 +930,10 @@ class dmRule(dmParameters):
                 
         if self.Field in dmGlobals.FIELDSLIST: #search as string list            
             for check in getValue:
-                if check.lower().Contains(compareValue.lower()):
+                if compareValue.lower() in check.lower():
                     return True
         else: #search as string
-            if getValue.lower().Contains(compareValue.lower()):
+            if compareValue.lower() in getValue.lower():
                 return True
         return False
 
@@ -952,10 +952,10 @@ class dmRule(dmParameters):
         for compareItem in compareValue:
             if self.Field in dmGlobals.FIELDSLIST: #compare list against list                
                 for getItem in getValue: #compare list items as lowercase
-                    if getItem.lower().Contains(compareItem.lower()):
+                    if compareItem.lower() in getItem.lower():
                         return True #return true at first instance of match
             else: #compare list against string
-                if getValue.lower().Contains(compareItem.lower()): #compare string item against list item
+                if compareItem.lower() in getValue.lower(): #compare string item against list item
                     return True #return true at first instance of match
         return False #all else failing return false
     
@@ -985,10 +985,10 @@ class dmRule(dmParameters):
         for compareItem in compareValue:
             if self.Field in dmGlobals.FIELDSLIST: #compare list against list                
                 for getItem in getValue: #compare list items as lowercase
-                    if getItem.lower().Contains(compareItem.lower()):
+                    if compareItem.lower() in getItem.lower():
                         return True #return true at first instance of match
             else: #compare list against string
-                if getValue.lower().Contains(compareItem.lower()): #compare string item against list item
+                if compareItem.lower() in getValue.lower(): #compare string item against list item
                     return True #return true at first instance of match
     
     def NotListContainsAnyOf(self, book):
@@ -1011,16 +1011,14 @@ class dmRule(dmParameters):
         getValue = self.GetFieldValue(book, self.Field) #get Value from book
         compareValue = self.ReplaceReferenceStrings(self.Value, book).split(dmGlobals.DMLISTDELIMITER)  #value to compare
 
-        count = 0               
+        all = True 
         for compareItem in compareValue:
             if self.Field in dmGlobals.FIELDSLIST: #compare list against list                
                 for getItem in getValue: #compare list items as lowercase
-                    if getItem.lower().Contains(compareItem.lower()):
-                        count = count + 1 #add a match count on match
+                    all &= compareItem.lower() in getItem.lower()
             else: #compare list against string
-                if getValue.lower().Contains(compareValue.lower()): #compare string item against list item
-                    count = count + 1 #add a match count on match
-        return count == len(compareValue)  #return wheter count of matches and count of compareValue list equal
+                all &= compareItem.lower() in getValue.lower() #compare string item against list item
+        return all
 
     def NotContainsAllOf(self, book):
         """Only applicable with string and list"""
@@ -1210,7 +1208,7 @@ class dmRule(dmParameters):
         minVal = self.Value.split(dmGlobals.DMLISTDELIMITER)[0]
         maxVal = self.Value.split(dmGlobals.DMLISTDELIMITER)[1]
         
-        if self.Field in dmGlobals.FIELDSNUMERIC or dmGlobals.FIELDSPSUEDONUMERIC:
+        if (self.Field in dmGlobals.FIELDSNUMERIC) or (self.Field in dmGlobals.FIELDSPSUEDONUMERIC):
             minVal = dmGlobals.StringToFloat(minVal)
             maxVal = dmGlobals.StringToFloat(maxVal)
         elif self.Field in dmGlobals.FIELDSDATETIME:

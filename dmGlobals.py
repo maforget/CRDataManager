@@ -1,4 +1,4 @@
-﻿# some variables for global use
+# some variables for global use
 import clr
 import System
 from System.IO import Path, FileInfo
