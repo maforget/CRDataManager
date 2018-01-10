@@ -1117,7 +1117,6 @@ class dmRule(dmParameters):
 
         elif self.Field in dmGlobals.FIELDSDATETIME:
             try:
-                compareValue = dmGlobals.StringToDate(compareValue)
                 return getValue > compareValue
             except:
                 raise Exception('could not convert \'' + self.Value + '\'  to Date')
@@ -1187,7 +1186,6 @@ class dmRule(dmParameters):
 
         elif self.Field in dmGlobals.FIELDSDATETIME:
             try:
-                compareValue = dmGlobals.StringToDate(compareValue)
                 return getValue < compareValue
             except:
                 raise Exception('could not convert \'' + self.Value + '\'  to Date')

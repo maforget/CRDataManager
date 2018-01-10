@@ -22,7 +22,7 @@ BAKFILE = Path.Combine(FOLDER, 'dataMan.bak')
 ERRFILE = Path.Combine(FOLDER, 'dataMan.err')
 TMPFILE = Path.Combine(FOLDER, 'dataMan.tmp')
 LOGFILE = Path.Combine(FOLDER, 'dataMan.log')
-CHKFILE = Path.Combine(FOLDER, 'dataMan.chk')		# will be created once the configuration is saved
+CHKFILE = Path.Combine(FOLDER, 'dataMan.chk')                # will be created once the configuration is saved
 GUIEXE = Path.Combine(FOLDER, 'crdmgui.exe')
 
 ##############End Set Paths##############
@@ -150,10 +150,10 @@ def IsFloat(value):
     return isinstance(value, float)
 
 def CRStringToList(strList):
-	return strList.Split(Array[str](CRLISTDELIMITER), StringSplitOptions.RemoveEmptyEntries)
+        return strList.Split(Array[str](CRLISTDELIMITER), StringSplitOptions.RemoveEmptyEntries)
 
 def DMStringToList(strList):
-	return strList.split(DMLISTDELIMITER)
+        return strList.split(DMLISTDELIMITER)
 
 def IsList(value):
     return isinstance(value, list) or isinstance(value, Array[str])
@@ -226,95 +226,95 @@ def ToString(obj):
 
 #######Field And Modifier helpers##############
 def ValidModifiers(strKey, strRuleOrAction):
-	strListReturn = []
-	if strRuleOrAction.lower() == 'rule':
-		strListReturn = ValidKeyModifiers(strKey)
-	elif strRuleOrAction.lower() == 'action':
-		strListReturn = ValidValModifiers(strKey)
-	return strListReturn
+        strListReturn = []
+        if strRuleOrAction.lower() == 'rule':
+                strListReturn = ValidKeyModifiers(strKey)
+        elif strRuleOrAction.lower() == 'action':
+                strListReturn = ValidValModifiers(strKey)
+        return strListReturn
 
 def ValidKeyModifiers(strKey):
-	strListReturn = []
-	if KeyFieldType(strKey) == 'STRING':
-		strListReturn = ALLOWEDKEYMODIFIERSSTRING
-	elif KeyFieldType(strKey) == 'LIST':
-		strListReturn = ALLOWEDKEYMODIFIERSLIST
-	elif KeyFieldType(strKey) == 'DATETIME':
-		strListReturn = ALLOWEDKEYMODIFIERSDATETIME
-	elif KeyFieldType(strKey) == 'BOOL':
-		strListReturn = ALLOWEDKEYMODIFIERSBOOL
-	elif KeyFieldType(strKey) == 'YESNO':
-		strListReturn = ALLOWEDKEYMODIFIERSYESNO
-	elif KeyFieldType(strKey) == 'NUMERIC':
-		strListReturn = ALLOWEDKEYMODIFIERSNUMERIC
-	elif KeyFieldType(strKey) == 'PSUEDONUMERIC':
-		strListReturn = ALLOWEDKEYMODIFIERSNUMERIC
-	elif KeyFieldType(strKey) == 'LANGUAGEISO':
-		strListReturn = ALLOWEDKEYMODIFIERSLANGUAGEISO
-	return strListReturn
+        strListReturn = []
+        if KeyFieldType(strKey) == 'STRING':
+                strListReturn = ALLOWEDKEYMODIFIERSSTRING
+        elif KeyFieldType(strKey) == 'LIST':
+                strListReturn = ALLOWEDKEYMODIFIERSLIST
+        elif KeyFieldType(strKey) == 'DATETIME':
+                strListReturn = ALLOWEDKEYMODIFIERSDATETIME
+        elif KeyFieldType(strKey) == 'BOOL':
+                strListReturn = ALLOWEDKEYMODIFIERSBOOL
+        elif KeyFieldType(strKey) == 'YESNO':
+                strListReturn = ALLOWEDKEYMODIFIERSYESNO
+        elif KeyFieldType(strKey) == 'NUMERIC':
+                strListReturn = ALLOWEDKEYMODIFIERSNUMERIC
+        elif KeyFieldType(strKey) == 'PSUEDONUMERIC':
+                strListReturn = ALLOWEDKEYMODIFIERSNUMERIC
+        elif KeyFieldType(strKey) == 'LANGUAGEISO':
+                strListReturn = ALLOWEDKEYMODIFIERSLANGUAGEISO
+        return strListReturn
 
 def ValidValModifiers(strKey):
-	strListReturn = []
-	if KeyFieldType(strKey) == 'STRING':
-		strListReturn = ALLOWEDVALMODIFIERSSTRING
-	elif KeyFieldType(strKey) == 'LIST':
-		strListReturn = ALLOWEDVALMODIFIERSLIST
-	elif KeyFieldType(strKey) == 'DATETIME':
-		strListReturn = ALLOWEDVALMODIFIERSDATETIME
-	elif KeyFieldType(strKey) == 'BOOL':
-		strListReturn = ALLOWEDVALMODIFIERSBOOL
-	elif KeyFieldType(strKey) == 'YESNO':
-		strListReturn = ALLOWEDVALMODIFIERSYESNO
-	elif KeyFieldType(strKey) == 'NUMERIC':
-		strListReturn = ALLOWEDVALMODIFIERSNUMERIC
-	elif KeyFieldType(strKey) == 'PSUEDONUMERIC':
-		strListReturn = ALLOWEDVALMODIFIERSNUMERIC
-	elif KeyFieldType(strKey) == 'LANGUAGEISO':
-		strListReturn = ALLOWEDVALMODIFIERSLANGUAGEISO	
-	if strKey in REGEXVARREPLACEKEYS:
-		strListReturn.append('RegExVarReplace')
-		strListReturn.append('RegExVarAppend')
-	return strListReturn
+        strListReturn = []
+        if KeyFieldType(strKey) == 'STRING':
+                strListReturn = ALLOWEDVALMODIFIERSSTRING
+        elif KeyFieldType(strKey) == 'LIST':
+                strListReturn = ALLOWEDVALMODIFIERSLIST
+        elif KeyFieldType(strKey) == 'DATETIME':
+                strListReturn = ALLOWEDVALMODIFIERSDATETIME
+        elif KeyFieldType(strKey) == 'BOOL':
+                strListReturn = ALLOWEDVALMODIFIERSBOOL
+        elif KeyFieldType(strKey) == 'YESNO':
+                strListReturn = ALLOWEDVALMODIFIERSYESNO
+        elif KeyFieldType(strKey) == 'NUMERIC':
+                strListReturn = ALLOWEDVALMODIFIERSNUMERIC
+        elif KeyFieldType(strKey) == 'PSUEDONUMERIC':
+                strListReturn = ALLOWEDVALMODIFIERSNUMERIC
+        elif KeyFieldType(strKey) == 'LANGUAGEISO':
+                strListReturn = ALLOWEDVALMODIFIERSLANGUAGEISO        
+        if strKey in REGEXVARREPLACEKEYS:
+                strListReturn.append('RegExVarReplace')
+                strListReturn.append('RegExVarAppend')
+        return strListReturn
 
 def KeyFieldType(strKey):
-	strReturn = 'UNKNOWN'
-	
-	if strKey in FIELDSSTRING:
-		strReturn = 'STRING'
-	elif strKey in FIELDSLIST:
-		strReturn = 'LIST'
-	elif strKey in FIELDSDATETIME:
-		strReturn = 'DATETIME'
-	elif strKey in FIELDSBOOL:
-		strReturn = 'BOOL'
-	elif strKey in FIELDSYESNO:
-		strReturn = 'YESNO'
-	elif strKey in FIELDSMANGAYESNO:
-		strReturn = 'MANGAYESNO'
-	elif strKey in FILEDSNUMERIC:
-		strReturn = 'NUMERIC'
-	elif strKey in FIELDSPSUEDONUMERIC:
-		strReturn = 'PSUEDONUMERIC'
-	elif strKey in FIELDSLANGUAGEISO:
-		strReturn = 'LANGUAGEISO'
-	return strReturn
+        strReturn = 'UNKNOWN'
+        
+        if strKey in FIELDSSTRING:
+                strReturn = 'STRING'
+        elif strKey in FIELDSLIST:
+                strReturn = 'LIST'
+        elif strKey in FIELDSDATETIME:
+                strReturn = 'DATETIME'
+        elif strKey in FIELDSBOOL:
+                strReturn = 'BOOL'
+        elif strKey in FIELDSYESNO:
+                strReturn = 'YESNO'
+        elif strKey in FIELDSMANGAYESNO:
+                strReturn = 'MANGAYESNO'
+        elif strKey in FILEDSNUMERIC:
+                strReturn = 'NUMERIC'
+        elif strKey in FIELDSPSUEDONUMERIC:
+                strReturn = 'PSUEDONUMERIC'
+        elif strKey in FIELDSLANGUAGEISO:
+                strReturn = 'LANGUAGEISO'
+        return strReturn
 
 def GetAvailableKeys(strRuleOrAction):
-	strListReturn = []
-	if strRuleOrAction.lower() == 'rule':
-		strListReturn.extend(ALLOWEDKEYS)
-	elif strRuleOrAction == 'action':
-		strListReturn.extend(ALLOWEDVALS)
-		strListReturn.extend(REGEXVARREPLACEKEYS)
-	return strListReturn
+        strListReturn = []
+        if strRuleOrAction.lower() == 'rule':
+                strListReturn.extend(ALLOWEDKEYS)
+        elif strRuleOrAction == 'action':
+                strListReturn.extend(ALLOWEDVALS)
+                strListReturn.extend(REGEXVARREPLACEKEYS)
+        return strListReturn
 
 def GetAppendString(strKey):
-	if strKey in FIELDSMULTILINE:
-		return "\r\n"
-	else:
-	   return ", "
+        if strKey in FIELDSMULTILINE:
+                return "\r\n"
+        else:
+           return ", "
 
-	pass
+        pass
 
 def GetValueType(strFieldName):
     strReturn = unknown
@@ -340,7 +340,7 @@ def GetValueType(strFieldName):
     return strReturn
 
 def ComicVineFields():
-	return ['Series','Volume','Number','Title','Published','ReleasedTime','AlternateSeries','Publisher','Imprint','Writer','Penciller','Colorist','Inker','Letterer','CoverArtist','Editor','Summary','Characters']
+        return ['Series','Volume','Number','Title','Published','ReleasedTime','AlternateSeries','Publisher','Imprint','Writer','Penciller','Colorist','Inker','Letterer','CoverArtist','Editor','Summary','Characters']
 
 #######Field And Modifier helpers##############
 
