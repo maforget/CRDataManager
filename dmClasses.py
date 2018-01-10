@@ -1211,7 +1211,7 @@ class dmRule(dmParameters):
             maxVal = dmGlobals.StringToFloat(maxVal)
         elif self.Field in dmGlobals.FIELDSDATETIME:
             minVal = System.DateTime.Parse(minVal)
-            maxVal = System.DateTime.Parse(minVal + ' 23:59:59')
+            maxVal = System.DateTime.Parse(maxVal + ' 23:59:59')
         if getValue >= minVal and getValue <= maxVal:
             return True
         return False
