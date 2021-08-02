@@ -1273,7 +1273,7 @@ class dmAction(dmParameters):
                 if FieldValue in dmGlobals.FIELDSNUMERIC:
                     setattr(book, FieldValue, dmGlobals.StringToFloat(newVal)) #convert to float
                 else:
-                    setattr(book, FieldValue, newVal.ToString())
+                    setattr(book, FieldValue, newVal)
                 #prepare the report
                 strReport = '    Field: ' + FieldValue + '    Action: ' + self.ToString()
                 strReport = strReport + System.Environment.NewLine + '        Previous Value: ' + dmGlobals.ToString(previousVal)
