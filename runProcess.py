@@ -1,4 +1,4 @@
-﻿import System
+import System
 import System.Drawing
 import System.Windows.Forms
 import dmClasses
@@ -21,25 +21,24 @@ class runProcess(Form):
         self._label1 = System.Windows.Forms.Label()
         self._label2 = System.Windows.Forms.Label()
         self._textBox1 = System.Windows.Forms.TextBox()
-        self._splitContainer1 = System.Windows.Forms.SplitContainer()
-        self._splitContainer1.BeginInit()
-        self._splitContainer1.Panel1.SuspendLayout()
-        self._splitContainer1.Panel2.SuspendLayout()
-        self._splitContainer1.SuspendLayout()
+        self.Panel1 = System.Windows.Forms.Panel()
+        self.Panel2 = System.Windows.Forms.Panel()
+        self.Panel1.SuspendLayout()
+        self.Panel2.SuspendLayout()
         self.SuspendLayout()
         # 
         # progressBar1
         # 
-        self._progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right
-        self._progressBar1.Location = System.Drawing.Point(4, 33)
+        self._progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right
+        self._progressBar1.Location = System.Drawing.Point(4, 30)
         self._progressBar1.Name = "progressBar1"
-        self._progressBar1.Size = System.Drawing.Size(515, 30)
+        self._progressBar1.Size = System.Drawing.Size(908, 30)
         self._progressBar1.TabIndex = 0
         # 
         # btnCancel
         # 
         self._btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right
-        self._btnCancel.Location = System.Drawing.Point(414, 289)
+        self._btnCancel.Location = System.Drawing.Point(797, 527)
         self._btnCancel.Name = "btnCancel"
         self._btnCancel.Size = System.Drawing.Size(105, 22)
         self._btnCancel.TabIndex = 1
@@ -68,7 +67,7 @@ class runProcess(Form):
         # label2
         # 
         self._label2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right
-        self._label2.Location = System.Drawing.Point(264, 5)
+        self._label2.Location = System.Drawing.Point(660, 5)
         self._label2.Name = "label2"
         self._label2.Size = System.Drawing.Size(252, 23)
         self._label2.TabIndex = 2
@@ -85,43 +84,41 @@ class runProcess(Form):
         self._textBox1.Name = "textBox1"
         self._textBox1.ReadOnly = True
         self._textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        self._textBox1.Size = System.Drawing.Size(526, 211)
+        self._textBox1.Size = System.Drawing.Size(914, 455)
         self._textBox1.TabIndex = 3
         self._textBox1.WordWrap = False
         # 
-        # splitContainer1
+        # Panel1
         # 
-        self._splitContainer1.Dock = System.Windows.Forms.DockStyle.Top
-        self._splitContainer1.Location = System.Drawing.Point(0, 0)
-        self._splitContainer1.Name = "splitContainer1"
-        self._splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+        self.Panel1.Dock = System.Windows.Forms.DockStyle.Top
+        self.Panel1.Controls.Add(self._label2)
+        self.Panel1.Controls.Add(self._progressBar1)
+        self.Panel1.Controls.Add(self._label1)
+        self.Panel1.Location = System.Drawing.Point(0, 0)
+        self.Panel1.Size = System.Drawing.Size(914, 68)
+        self.Panel1.Name = "Panel1";
         # 
-        # splitContainer1.Panel1
+        # Panel2
         # 
-        self._splitContainer1.Panel1.Controls.Add(self._label2)
-        self._splitContainer1.Panel1.Controls.Add(self._progressBar1)
-        self._splitContainer1.Panel1.Controls.Add(self._label1)
-        # 
-        # splitContainer1.Panel2
-        # 
-        self._splitContainer1.Panel2.Controls.Add(self._textBox1)
-        self._splitContainer1.Size = System.Drawing.Size(526, 283)
-        self._splitContainer1.SplitterDistance = 68
-        self._splitContainer1.TabIndex = 4
+        self.Panel2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right
+        self.Panel2.Controls.Add(self._textBox1)
+        self.Panel2.Size = System.Drawing.Size(914, 455)
+        self.Panel2.Location = System.Drawing.Point(0, 66);
+        self.Panel2.Name = "Panel2";
+        self.Panel2.TabIndex = 4
         # 
         # runProcess
         # 
-        self.ClientSize = System.Drawing.Size(526, 318)
-        self.Controls.Add(self._splitContainer1)
+        self.ClientSize = System.Drawing.Size(914, 561)
+        self.Controls.Add(self.Panel1)
+        self.Controls.Add(self.Panel2)
         self.Controls.Add(self._btnCancel)
         self.Name = "runProcess"
         self.Text = "runProcess"
         self.Shown += self.RunProcessShown
-        self._splitContainer1.Panel1.ResumeLayout(False)
-        self._splitContainer1.Panel2.ResumeLayout(False)
-        self._splitContainer1.Panel2.PerformLayout()
-        self._splitContainer1.EndInit()
-        self._splitContainer1.ResumeLayout(False)
+        self.Panel1.ResumeLayout(False)
+        self.Panel2.ResumeLayout(False)
+        self.Panel2.PerformLayout()
         self.ResumeLayout(False)
 
     def BgwProcessDoWork(self, sender, e):

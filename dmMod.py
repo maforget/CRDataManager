@@ -1,4 +1,4 @@
-﻿import clr
+import clr
 import sys
 import System
 clr.AddReference('System.Windows.Forms')
