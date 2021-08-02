@@ -168,6 +168,9 @@ def StringToBool(strValue):
 def IsBool(value):
     return isinstance(value, bool)
 
+def IsYesNo(value):
+    return isinstance(value, YesNo)		
+	
 def StringToYesNo(strValue):
     ynReturn = None
     if strValue == 'Unknown' or strValue == '':
@@ -181,9 +184,18 @@ def StringToYesNo(strValue):
         raise dmConversionError(strValue, 'ComicRack.Engine.YesNo')
     return ynReturn
 
-def IsYesNo(value):
-    return isinstance(value, YesNo)
+def YesNoToString(YesNoValue):
+    strReturn = ''
+    if MangaYesNoValue == YesNo.Yes:
+        strReturn = 'Yes'
+    elif MangaYesNoValue == YesNo.No:
+        strReturn = 'No'
 
+    return strReturn
+
+def IsMangaYesNo(value):
+    return isinstance(value, MangaYesNo)
+	
 def StringToMangaYesNo(strValue):
     ynReturn = None
     if strValue.lower() == 'yes':
@@ -192,15 +204,13 @@ def StringToMangaYesNo(strValue):
         ynReturn = MangaYesNo.No
     elif strValue.lower() == 'yesandrighttoleft':
         ynReturn = MangaYesNo.YesAndRightToLeft
+    else:
+        ynReturn = MangaYesNo.Unknown		 							 
 
     if ynReturn == None:
         raise dmConversionError(strValue, 'ComicRack.Engine.MangaYesNo')
     
     return ynReturn
-
-def IsMangaYesNo(value):
-    return isinstance(value, MangaYesNo)
-
 
 def ToString(obj):
     strReturn = ''

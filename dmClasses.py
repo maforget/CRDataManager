@@ -776,6 +776,15 @@ class dmParameters(dmNode):
 
             pass
         return theVal 
+		
+    def GetStringValue(self, book, strField):
+        if dmGlobals.TraceFunctionMessages: print 'Method: dmParamaters.GetFieldValue(book, strFieldName)'
+        objReturn = none
+        FieldValue = strField
+
+        objReturn = dmGlobals.ToString(getattr(book, strField))
+
+        return objReturn
 
     def GetFieldValue(self, book, strFieldName=None):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmParameters:GetFieldValue(book, strFieldName)'
@@ -850,7 +859,10 @@ class dmParameters(dmNode):
         
         #find field (including custom) references and replace
         for x in Regex.Matches(strNewValue, "\\{([^}]+?)}"):
-            strNewValue = strNewValue.replace(x.Groups[0].Value, self.GetFieldValue(book, x.Groups[1].Value))      
+            if not x.Groups[1].Value in dmGlobals.FIELDSSTRING:
+                strNewValue = strNewValue.Replace(x.Groups[0].Value, GetStringValue(book, x.Groups[1].Value))            
+            else:
+                strNewValue = strNewValue.replace(x.Groups[0].Value, self.GetFieldValue(book, x.Groups[1].Value))          
 
         return strNewValue
 
