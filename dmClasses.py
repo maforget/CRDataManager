@@ -803,6 +803,7 @@ class dmParameters(dmNode):
         
         if FieldValue in dmGlobals.FIELDSLIST:
                 objReturn = self.GetList(book, FieldValue)
+                objReturn = dmGlobals.ToString(objReturn)
         elif not FieldValue in dmGlobals.ALLOWEDVALS and not FieldValue in dmGlobals.ALLOWEDKEYS:
             objReturn = self.GetCustomField(book, FieldValue)            
         else:
