@@ -539,7 +539,13 @@ class dmRuleset(dmNode):
         strReport = ''
         for action in self.Actions:
             if dmGlobals.TraceGeneralMessages: print 'Applying Actions...'
-            strTemp = action.Apply(book)
+            try:
+                strTemp = action.Apply(book)
+            except Exception as er:
+                #report errors instead
+                strTemp = ''
+                strReport = '    An unexpected error occured in Action: ' + self.ToString() + System.Environment.NewLine
+                strReport = strReport + '        Error: ' + er.message
             if strTemp != '':
                 if strReport != '': strReport = strReport + System.Environment.NewLine
                 if dmGlobals.TraceGeneralMessages: print 'Value was modified, adding info to report'
