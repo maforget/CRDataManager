@@ -143,7 +143,10 @@ class runProcess(Form):
             if not self._bgwProcess.CancellationPending:
                 self._bgwProcess.ReportProgress((100 / len(books)) * count + 1, [count, books[count]])
                 if dmGlobals.TraceGeneralMessages: print 'Processing Ruleset Collection'
-                bookReport = collection.ProcessBook(books[count], self._bgwProcess)
+                try:
+                    bookReport = collection.ProcessBook(books[count], self._bgwProcess)
+                except:
+                    bookReport = ''
                 if bookReport != '':
                     strReport = dmGlobals.AppendReport(strReport, bookReport)
                     bookTouchCount = bookTouchCount + 1
