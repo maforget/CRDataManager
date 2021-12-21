@@ -785,7 +785,7 @@ class dmParameters(dmNode):
 		
     def GetStringValue(self, book, strField):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmParamaters.GetFieldValue(book, strFieldName)'
-        objReturn = none
+        objReturn = None
         FieldValue = strField
 
         objReturn = dmGlobals.ToString(getattr(book, strField))
