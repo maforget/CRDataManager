@@ -152,6 +152,9 @@ def IsFloat(value):
 def CRStringToList(strList):
         return strList.Split(Array[str](CRLISTDELIMITER), StringSplitOptions.RemoveEmptyEntries)
 
+def ListTOCRString(list):
+    return CRLISTDELIMITER.join([str(x) for x in list])
+
 def DMStringToList(strList):
         return strList.split(DMLISTDELIMITER)
 
@@ -227,6 +230,8 @@ def ToString(obj):
         pass
     elif isinstance(obj, System.DateTime):
         strReturn = obj.ToString(DATEFORMAT)
+    elif IsList(obj):
+        strReturn = ListTOCRString(obj)
     else:
         strReturn = obj.ToString()
 
