@@ -1479,8 +1479,9 @@ class dmAction(dmParameters):
         RegExp = Regex(setPattern, RegexOptions.IgnoreCase | RegexOptions.Singleline)
         
         myString = getValue    
-        while RegExp.Match(myString).Success:
-            myString = RegExp.Replace(myString, setFormat)        
+        if not myString:
+            while RegExp.Match(myString).Success:
+                myString = RegExp.Replace(myString, setFormat)        
         
         strReport = self.SetFieldValue(book, myString)
             
