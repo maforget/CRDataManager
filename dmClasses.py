@@ -866,9 +866,9 @@ class dmParameters(dmNode):
         #find field (including custom) references and replace
         for x in Regex.Matches(strNewValue, "\\{([^}]+?)}"):
             if not x.Groups[1].Value in dmGlobals.FIELDSSTRING:
-                strNewValue = strNewValue.Replace(x.Groups[0].Value, GetStringValue(book, x.Groups[1].Value))            
+                strNewValue = strNewValue.Replace(x.Groups[0].Value, self.GetStringValue(book, x.Groups[1].Value))            
             else:
-                strNewValue = strNewValue.replace(x.Groups[0].Value, self.GetFieldValue(book, x.Groups[1].Value))          
+                strNewValue = strNewValue.Replace(x.Groups[0].Value, self.GetFieldValue(book, x.Groups[1].Value))         
 
         return strNewValue
 
