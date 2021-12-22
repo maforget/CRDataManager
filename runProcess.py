@@ -16,6 +16,8 @@ class runProcess(Form):
         self.Icon = Icon(dmGlobals.ICON_SMALL)
         self.Books = books
         self.Collection = collection
+        self.TotalRulesets = 0
+        self.countRuleset = 0
         pass
         
     def InitializeComponent(self):
@@ -30,17 +32,17 @@ class runProcess(Form):
         self.Panel1.SuspendLayout()
         self.Panel2.SuspendLayout()
         self.SuspendLayout()
-        # 
+        #
         # progressBar1
-        # 
+        #
         self._progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right
         self._progressBar1.Location = System.Drawing.Point(4, 30)
         self._progressBar1.Name = "progressBar1"
         self._progressBar1.Size = System.Drawing.Size(908, 30)
         self._progressBar1.TabIndex = 0
-        # 
+        #
         # btnCancel
-        # 
+        #
         self._btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right
         self._btnCancel.Location = System.Drawing.Point(797, 527)
         self._btnCancel.Name = "btnCancel"
@@ -49,17 +51,17 @@ class runProcess(Form):
         self._btnCancel.Text = "Cancel"
         self._btnCancel.UseVisualStyleBackColor = True
         self._btnCancel.Click += self.BtnCancelClick
-        # 
+        #
         # bgwProcess
-        # 
+        #
         self._bgwProcess.WorkerReportsProgress = True
         self._bgwProcess.WorkerSupportsCancellation = True
         self._bgwProcess.DoWork += self.BgwProcessDoWork
         self._bgwProcess.ProgressChanged += self.BgwProcessProgressChanged
         self._bgwProcess.RunWorkerCompleted += self.BgwProcessRunWorkerCompleted
-        # 
+        #
         # label1
-        # 
+        #
         self._label1.Location = System.Drawing.Point(4, 5)
         self._label1.Name = "label1"
         self._label1.Size = System.Drawing.Size(252, 23)
@@ -67,9 +69,9 @@ class runProcess(Form):
         self._label1.Text = "Processing book 0 of 0"
         self._label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         self._label1.UseMnemonic = False
-        # 
+        #
         # label2
-        # 
+        #
         self._label2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right
         self._label2.Location = System.Drawing.Point(660, 5)
         self._label2.Name = "label2"
@@ -78,9 +80,9 @@ class runProcess(Form):
         self._label2.Text = "Processing book 0 of 0"
         self._label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         self._label2.UseMnemonic = False
-        # 
+        #
         # textBox1
-        # 
+        #
         self._textBox1.BackColor = System.Drawing.SystemColors.Window
         self._textBox1.Dock = System.Windows.Forms.DockStyle.Fill
         self._textBox1.Location = System.Drawing.Point(0, 0)
@@ -91,9 +93,9 @@ class runProcess(Form):
         self._textBox1.Size = System.Drawing.Size(914, 455)
         self._textBox1.TabIndex = 3
         self._textBox1.WordWrap = False
-        # 
+        #
         # Panel1
-        # 
+        #
         self.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         self.Panel1.Controls.Add(self._label2)
         self.Panel1.Controls.Add(self._progressBar1)
@@ -101,18 +103,18 @@ class runProcess(Form):
         self.Panel1.Location = System.Drawing.Point(0, 0)
         self.Panel1.Size = System.Drawing.Size(914, 68)
         self.Panel1.Name = "Panel1";
-        # 
+        #
         # Panel2
-        # 
+        #
         self.Panel2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right
         self.Panel2.Controls.Add(self._textBox1)
         self.Panel2.Size = System.Drawing.Size(914, 455)
         self.Panel2.Location = System.Drawing.Point(0, 66);
         self.Panel2.Name = "Panel2";
         self.Panel2.TabIndex = 4
-        # 
+        #
         # runProcess
-        # 
+        #
         self.ClientSize = System.Drawing.Size(914, 561)
         self.Controls.Add(self.Panel1)
         self.Controls.Add(self.Panel2)
@@ -142,6 +144,8 @@ class runProcess(Form):
 
         dtStart = System.DateTime.Now
         dmGlobals.WriteStartTime()
+
+        self.TotalRulesets = self.getTotalNumberOfRuleSet(collection)
         while count < len(books):
             tmpDic  = dmGlobals.CreateBookDict(books[count])
             if not self._bgwProcess.CancellationPending:
@@ -176,30 +180,49 @@ class runProcess(Form):
 
         pass
 
+    def getTotalNumberOfRuleSet(self, element):
+        count = 0
+
+        grp = element.Groups
+        ruleSet = element.Rulesets
+
+        if isinstance(ruleSet, list):
+            count += len(ruleSet)
+
+        if isinstance(grp, list):
+            for each_element in grp:
+                count += self.getTotalNumberOfRuleSet(each_element)
+        
+        return count
+
     def BgwProcessProgressChanged(self, sender, e):
         progress = e.ProgressPercentage
         self.SetProgress(progress, e.UserState)
         pass
-
+    
     def SetProgress(self, progress, userState):
         if self.InvokeRequired:
             self.Invoke(self.SetProgress, [progress, userState])
             return
 
-        self._progressBar1.Value = progress
-        if isinstance(userState, list):
-            if isinstance(userState[1], str):
-                self._textBox1.Text = userState[1]
-            else:
-                self._label2.Text = userState[1].CaptionWithoutTitle
-
         count = userState[0]
         booklen = len(self.Books)
-        booklen = booklen.ToString()
-        bookcount = count.ToString()
-        
+        max = self.TotalRulesets * booklen
+
+        if count == 999999:
+            self.countRuleset += 1
+            progress = (self.countRuleset * 100.0) / max
+        else:
+            progress = ((self.TotalRulesets * count) * 100) / max
+
         self._progressBar1.Value = progress
-        self._label1.Text = 'Processing ' + bookcount + ' of '+ booklen +' books'
+        if isinstance(userState[1], str):
+            self._textBox1.Text = userState[1]
+        else:
+            self._label2.Text = userState[1].CaptionWithoutTitle
+
+        self._progressBar1.Value = progress
+        if count != 999999 and count < booklen: self._label1.Text = 'Processing ' + (count + 1).ToString() + ' of ' + booklen.ToString() + ' books'
         pass
 
     def BtnCancelClick(self,sender, e):

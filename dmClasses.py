@@ -101,7 +101,7 @@ class dmContainer(dmNode):
         
         self.Groups = [] #create Group List
         self.Rulesets = [] #create Ruleset List        
-        
+
         pass
 
     def ParseGroup(self, arrParameters, nStartLine, dmcParent):
@@ -215,6 +215,7 @@ class dmContainer(dmNode):
                 if not bgWorker.CancellationPending:
                     if dmGlobals.TraceGeneralMessages: print 'Processing book...'
                     strRulesetReport = ruleset.ProcessBook(book, bgWorker)
+                    bgWorker.ReportProgress(0, [999999, book])
                     if strRulesetReport != None and strRulesetReport != '':
                         strReport = dmGlobals.AppendReport(strReport, strRulesetReport)
                 else:
@@ -259,7 +260,6 @@ class dmCollection(dmContainer):
     def getVersion(self): return self.__Version
     def setVersion(self, version): self.__setversion__(version)
     Version = property(getVersion, setVersion)
-
 
     def __init__(self, strParameters):
         if dmGlobals.TraceFunctionMessages: print 'dmCollection constructor: dmCollection(objParameters)'
