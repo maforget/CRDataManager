@@ -1393,9 +1393,10 @@ class dmAction(dmParameters):
         else: #if it's not a list item consider it a string (since only strings and lists have this modifier available)
             for val in setValue: #iterate through list of values to remove
                 newValue = getValue
-                while  val.lower() in newValue.lower(): #as long as string contains the value to remove
-                    idx = newValue.lower().find(val.lower()) #find the index of the value to remove
-                    newValue = newValue.Remove(idx, len(val)) #remove len(val) characters starting from idx
+                if val:
+                    while  val.lower() in newValue.lower(): #as long as string contains the value to remove
+                        idx = newValue.lower().find(val.lower()) #find the index of the value to remove
+                        newValue = newValue.Remove(idx, len(val)) #remove len(val) characters starting from idx
 
             setValue = newValue
             
