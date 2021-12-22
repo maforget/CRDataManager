@@ -1446,7 +1446,7 @@ class dmAction(dmParameters):
                 while finditem.lower() in newValue:
                     idx = newValue.find(finditem) #find the index of the value to replace
                     newValue = newValue.Remove(idx, len(finditem))
-                    newValue = newValue.Insert(idx, replaceitem)
+                    newValue = newValue.Insert(idx, replaceitem) 
 
             
         strReport = self.SetFieldValue(book, newValue)
@@ -1459,8 +1459,11 @@ class dmAction(dmParameters):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmAction.Calc(book)'
                                                         
         setValue = self.ReplaceReferenceStrings(self.Value, book)
-                            
-        myVal = eval(setValue)
+        
+        try:
+            myVal = eval(setValue)
+        except:
+            myVal = self.FieldConvert(setValue, self.Field) #convert setValue to proper object class
         
         strReport = self.SetFieldValue(book, myVal)
             
