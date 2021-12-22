@@ -523,15 +523,23 @@ class dmRuleset(dmNode):
             if len(self.Rules) > 0: 
                 bReturn = False #we need False to be default if we are in OR mode but only if there are rules present.
             for rule in self.Rules: #iterate over rules
-                if rule.Match(book): #we only need one match to decide if conditions are met in OR mode
-                    bReturn = True #set return True as soon as a match found
-                    break #and then exit iteration
+                try:
+                    if rule.Match(book): #we only need one match to decide if conditions are met in OR mode
+                        bReturn = True #set return True as soon as a match found
+                        break #and then exit iteration
+                except Exception as er:
+                    #report errors instead
+                    bReturn = False
         else: #if we are using AND mode
             if dmGlobals.TraceGeneralMessages: print 'Checking rules in AND Mode'
             for rule in self.Rules: #iterate through Rules
-                if not rule.Match(book): # we only need one non-match to determine conditions are not met
-                    bReturn = False #set return to False as soon as non-match found
-                    break #and then exit iteration
+                try:
+                    if not rule.Match(book): # we only need one non-match to determine conditions are not met
+                        bReturn = False #set return to False as soon as non-match found
+                        break #and then exit iteration
+                except Exception as er:
+                    #report errors instead
+                    bReturn = False
         return bReturn #return True or False
 
     def ApplyActions(self, book):
