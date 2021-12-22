@@ -820,7 +820,7 @@ class dmParameters(dmNode):
         if dmGlobals.TraceGeneralMessages: 
             print dmGlobals.ToString(objReturn)        
             print
-        return dmGlobals.ToString(objReturn)
+        return objReturn
 
     def GetList(self, book, strFieldName):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmParameters:GetList(book, strFieldName)'
@@ -876,7 +876,7 @@ class dmParameters(dmNode):
             if x.Groups[1].Value in dmGlobals.FIELDSSTRING:
                 strNewValue = strNewValue.Replace(x.Groups[0].Value, self.GetStringValue(book, x.Groups[1].Value))            
             else:
-                strNewValue = strNewValue.Replace(x.Groups[0].Value, self.GetFieldValue(book, x.Groups[1].Value))         
+                strNewValue = strNewValue.Replace(x.Groups[0].Value, dmGlobals.ToString(self.GetFieldValue(book, x.Groups[1].Value)))         
 
         return strNewValue
 
