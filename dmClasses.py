@@ -810,7 +810,7 @@ class dmParameters(dmNode):
         if dmGlobals.TraceGeneralMessages: print 'Retrieving value for ' + FieldValue + ' field in comic: ' + book.CaptionWithoutTitle #debug Info
         
         if FieldValue in dmGlobals.FIELDSLIST:
-                objReturn = self.GetList(book, FieldValue)
+            objReturn = self.GetList(book, FieldValue)
         elif not FieldValue in dmGlobals.ALLOWEDVALS and not FieldValue in dmGlobals.ALLOWEDKEYS:
             objReturn = self.GetCustomField(book, FieldValue)            
         else:
@@ -1306,9 +1306,11 @@ class dmAction(dmParameters):
                 strReport = strReport + System.Environment.NewLine + '        New Value: ' + dmGlobals.ToString(newVal) + '\r\n'
             except Exception as er:
                 #report errors instead
-                strReport = '    An unexpected error occured in Action: ' + self.ToString() + '    Parent Ruleset : ' + self.Parent.Name
+                strReport = '    An unexpected error occured in Action: ' + self.ToString() + '    Parent Ruleset : ' + self.Parent.Name + System.Environment.NewLine
                 if isinstance(er, dmConversionError):
-                    strReport = strReport + ' Error' + er.msg
+                    strReport = strReport + '        Error: ' + er.msg + System.Environment.NewLine
+                else:
+                    strReport = strReport + '        Error: ' + er.message + System.Environment.NewLine
                 pass
         else:
             self.SetCustomField(book, FieldValue, newVal)
