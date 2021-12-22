@@ -7,9 +7,13 @@ from System.Drawing import *
 from System.Windows.Forms import *
 from dmClasses import *
 
+import dmGlobals
+from dmGlobals import *
+
 class runProcess(Form):
     def __init__(self, books, collection):
         self.InitializeComponent()
+        self.Icon = Icon(dmGlobals.ICON_SMALL)
         self.Books = books
         self.Collection = collection
         pass
