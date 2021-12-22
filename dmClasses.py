@@ -1298,6 +1298,8 @@ class dmAction(dmParameters):
             try:
                 if FieldValue in dmGlobals.FIELDSNUMERIC:
                     setattr(book, FieldValue, dmGlobals.StringToFloat(newVal)) #convert to float
+                elif FieldValue in dmGlobals.FIELDSPSUEDONUMERIC:
+                    setattr(book, FieldValue, dmGlobals.ToString(newVal))
                 else:
                     setattr(book, FieldValue, newVal)
                 #prepare the report
