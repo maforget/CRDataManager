@@ -872,7 +872,7 @@ class dmParameters(dmNode):
         strNewValue = strNewValue.replace('{tab}', '    ')
         
         #find field (including custom) references and replace
-        for x in Regex.Matches(strNewValue, "{([^},]{2,}?)}"):
+        for x in Regex.Matches(strNewValue, "{([^},]{3,}?)}"):
             if x.Groups[1].Value in dmGlobals.FIELDSSTRING:
                 strNewValue = strNewValue.Replace(x.Groups[0].Value, self.GetStringValue(book, x.Groups[1].Value))            
             else:
