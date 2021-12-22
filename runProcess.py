@@ -149,8 +149,11 @@ class runProcess(Form):
                 if dmGlobals.TraceGeneralMessages: print 'Processing Ruleset Collection'
                 try:
                     bookReport = collection.ProcessBook(books[count], self._bgwProcess)
-                except:
+                except Exception as er:
+                    #report errors instead
                     bookReport = ''
+                    strReport = 'Book: ' + books[count].CaptionWithoutTitle + ' had an unexpected error occured when processing it' + System.Environment.NewLine
+                    strReport = strReport + '    Error: ' + er.message
                 if bookReport != '':
                     strReport = dmGlobals.AppendReport(strReport, bookReport)
                     bookTouchCount = bookTouchCount + 1
