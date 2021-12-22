@@ -13,7 +13,7 @@ from cYo.Projects.ComicRack.Engine import MangaYesNo, YesNo
 
 ############Set Paths##############
 FOLDER = FileInfo(__file__).DirectoryName + Path.DirectorySeparatorChar.ToString()
-IMGFOLDER = FOLDER + 'images' + Path.DirectorySeparatorChar.ToString()
+IMGFOLDER = FOLDER
 DATFILE = Path.Combine(FOLDER, 'dataMan.dat') #can load 1.24 text files or 2.3.1 xml files saves as xml
 SAMPLEFILE = Path.Combine(FOLDER, 'dataManSample.dat')
 INIFILE = Path.Combine(FOLDER, 'dataMan.ini')
