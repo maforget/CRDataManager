@@ -1228,6 +1228,8 @@ class dmRule(dmParameters):
         if dmGlobals.TraceFunctionMessages: print 'Method dmRule:Range(book)'
 
         getValue = self.GetFieldValue(book, self.Field)
+        if self.Field in dmGlobals.FIELDSPSUEDONUMERIC and isinstance(getValue, str):
+            getValue = dmGlobals.StringToFloat(getValue)
         
         minVal = self.Value.split(dmGlobals.DMLISTDELIMITER)[0]
         maxVal = self.Value.split(dmGlobals.DMLISTDELIMITER)[1]
