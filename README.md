@@ -1,5 +1,6 @@
 # crDataManager: The ComicRack Data Manager
-[Download here](https://github.com/maforget/CRDataManager/releases/download/2.06.01.794/DataManager_2.06.01.r794.crplugin)
+[Download here](https://github.com/maforget/CRDataManager/releases/download/2.06.01.794/DataManager_2.06.01.r794.crplugin)  
+[Download Small GUI fix](https://github.com/maforget/CRDataManager/raw/master/crdmgui.exe) (you will need to manually copy it to `%appdata%\cYo\ComicRack\Scripts\Data Manager` and replace the existing file to update. Will update the package later when there are more changes.
 
 ### docdoom & T3KN0Gh057 proudly present the CR Data Manager, new fixes by maforget.
 
