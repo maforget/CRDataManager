@@ -769,7 +769,7 @@ class dmParameters(dmNode):
         try:
             if FieldValue in dmGlobals.ALLOWEDVALS:
                 if FieldValue in dmGlobals.FIELDSLIST and not dmGlobals.IsList(strValue):
-                    theVal = strValue.Split(Array[str](dmGlobals.CRLISTDELIMITER), StringSplitOptions.RemoveEmptyEntries)
+                    theVal = filter(None, strValue.split(dmGlobals.CRLISTDELIMITER))
                 elif FieldValue in dmGlobals.FIELDSBOOL and not dmGlobals.IsBool(strValue):
                     theVal = dmGlobals.StringToBool(strValue)
                 elif FieldValue in dmGlobals.FIELDSDATETIME and not dmGlobals.IsDateTime(strValue):
