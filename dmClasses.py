@@ -1452,12 +1452,12 @@ class dmAction(dmParameters):
         else:
             idx = 0
             if not dmGlobals.COMPARE_CASE_SENSITIVE:
-                while finditem.lower() in newValue:
+                while finditem.lower() in newValue.lower():
                     idx = newValue.lower().find(finditem.lower()) #find the index of the value to replace
                     newValue = newValue.Remove(idx, len(finditem))
                     newValue = newValue.Insert(idx, replaceitem)
             else:
-                while finditem.lower() in newValue:
+                while finditem in newValue:
                     idx = newValue.find(finditem) #find the index of the value to replace
                     newValue = newValue.Remove(idx, len(finditem))
                     newValue = newValue.Insert(idx, replaceitem) 
