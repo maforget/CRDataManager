@@ -1450,18 +1450,23 @@ class dmAction(dmParameters):
             newValue = newList
     
         else:
-            idx = 0
+            idx = 0; idx2 = -1
             if not dmGlobals.COMPARE_CASE_SENSITIVE:
                 while finditem.lower() in newValue.lower():
                     idx = newValue.lower().find(finditem.lower()) #find the index of the value to replace
                     newValue = newValue.Remove(idx, len(finditem))
                     newValue = newValue.Insert(idx, replaceitem)
+                    if idx2 == idx:
+                        break
+                    idx2 = idx
             else:
                 while finditem in newValue:
                     idx = newValue.find(finditem) #find the index of the value to replace
                     newValue = newValue.Remove(idx, len(finditem))
                     newValue = newValue.Insert(idx, replaceitem) 
-
+                    if idx2 == idx:
+                        break
+                    idx2 = idx
             
         strReport = self.SetFieldValue(book, newValue)
 
