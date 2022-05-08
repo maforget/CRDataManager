@@ -215,7 +215,7 @@ class dmContainer(dmNode):
                 if not bgWorker.CancellationPending:
                     if dmGlobals.TraceGeneralMessages: print 'Processing book...'
                     strRulesetReport = ruleset.ProcessBook(book, bgWorker)
-                    bgWorker.ReportProgress(0, [999999, book])
+                    bgWorker.ReportProgress(0, [999999, book, strRulesetReport, ruleset])
                     if strRulesetReport != None and strRulesetReport != '':
                         strReport = dmGlobals.AppendReport(strReport, strRulesetReport)
                 else:
