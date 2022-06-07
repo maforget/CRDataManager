@@ -9,6 +9,7 @@ See the [manual](https://storage.googleapis.com/google-code-archive-downloads/v2
 #### Please note: Data Manager works best if you scraped your books before with the excellent and highly recommended [ComicVine Scraper](https://github.com/cbanack/comic-vine-scraper). Also read the [ComicRack Manual](https://sites.google.com/site/comicrackmanual/home) and read the [Organizer guide.](https://drive.google.com/file/d/1bBpXpYx4qN7ZAfz6RSsQJv0ouo8j9Al4/view). Links to v1 [here](https://github.com/rainerc/cr-data-manager)
 
 ![dataManager](https://user-images.githubusercontent.com/11904426/147198942-8defa164-4af1-4c08-8085-700070a30d46.png)
+![](https://user-images.githubusercontent.com/11904426/170649136-e135e50a-be88-4f28-9377-e06fa2e696e5.png)
 ----
 
 ##### Also for ComicRack:
