@@ -426,7 +426,7 @@ class dmGroup(dmContainer):
                     CompiledReport = CompiledReport + strTempReport
             if CompiledReport != '':
                 CompiledReport = 'Group: \'' + self.Name + '\' touched book: ' + book.CaptionWithoutTitle + System.Environment.NewLine + CompiledReport
-                strReport = strReport + System.Environment.NewLine + CompiledReport
+                strReport = System.Environment.NewLine + CompiledReport
         else:
             if dmGlobals.TraceGeneralMessages: print 'Conditions set forth by filters of group\'' + self.Name + '\' not met, skiping group.'
         
