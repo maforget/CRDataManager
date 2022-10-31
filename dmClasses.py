@@ -421,7 +421,7 @@ class dmGroup(dmContainer):
             
             strTempReport = ''
             for action in self.FiltersAndDefaults.Actions:
-                strTempReport = action.Apply(book) + System.Environment.NewLine
+                strTempReport = action.Apply(book)
                 if strTempReport != None and strTempReport != '':
                     CompiledReport = CompiledReport + strTempReport
             if CompiledReport != '':
