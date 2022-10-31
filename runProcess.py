@@ -180,8 +180,9 @@ class runProcess(Form):
                     collection.ProcessBook(books[count], self._bgwProcess)
                 except Exception as er:
                     #report errors instead
-                    strReport = 'Book: ' + books[count].CaptionWithoutTitle + ' had an unexpected error occured when processing it' + System.Environment.NewLine
-                    strReport = strReport + '    Error: ' + er.message
+                    strError = 'Book: ' + books[count].CaptionWithoutTitle + ' had an unexpected error occured when processing it' + System.Environment.NewLine
+                    strError += '    Error: ' + er.message + System.Environment.NewLine
+                    self.BookReport += strError
                 if self.BookReport != '' or self.BookReport != None:
                     #self.AddToTreeView(books[count], bookReport)
                     strReport = dmGlobals.AppendReport(strReport, self.BookReport)
