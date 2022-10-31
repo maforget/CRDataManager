@@ -238,7 +238,7 @@ class runProcess(Form):
         if count == 999999:
             self.countRuleset += 1
             progress = (self.countRuleset * 100.0) / max
-        else:
+        elif max > 0:
             progress = ((self.TotalRulesets * count) * 100) / max
 
         self._progressBar1.Value = progress
