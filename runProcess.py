@@ -237,11 +237,12 @@ class runProcess(Form):
         booklen = len(self.Books)
         max = self.TotalRulesets * booklen
 
-        if count == 999999:
-            self.countRuleset += 1
-            progress = (self.countRuleset * 100.0) / max
-        elif max > 0:
-            progress = ((self.TotalRulesets * count) * 100) / max
+        if max > 0:
+            if count == 999999:
+                self.countRuleset += 1
+                progress = (self.countRuleset * 100.0) / max
+            else:
+                progress = ((self.TotalRulesets * count) * 100) / max
 
         self._progressBar1.Value = progress
         if not isinstance(userState[1], str):
