@@ -217,7 +217,9 @@ class runProcess(Form):
         if isinstance(grp, list):
             for each_element in grp:
                 count += self.getTotalNumberOfRuleSet(each_element)
-        
+                if isinstance(each_element.FiltersAndDefaults, dmRuleset):
+                    count += 1
+
         return count
 
     def BgwProcessProgressChanged(self, sender, e):
