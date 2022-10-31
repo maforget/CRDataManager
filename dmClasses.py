@@ -450,6 +450,14 @@ class dmGroup(dmContainer):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmGroup:ToString()'
         strReturn = 'Group: ' + self.Name + ' ' + self.FiltersAndDefaults.HumanizeRules()
         return strReturn
+
+    def ToStringConditions(self):
+        if dmGlobals.TraceFunctionMessages: print 'Method: dmGroup:ToString()'
+        cond = self.FiltersAndDefaults.HumanizeRulesConditionOnly()
+        strReturn = ''
+        if cond:
+            strReturn = 'Group: ' + self.Name + ' (' + cond + ') =>' + System.Environment.NewLine
+        return strReturn
     
 class dmRuleset(dmNode):
     """Container for rules and actions"""
@@ -573,8 +581,9 @@ class dmRuleset(dmNode):
                 print 'Processing Ruleset: ' + self.Name
             #create a dictionary of values
             strTemp = self.ApplyActions(book)
+            grpConditionReport = self.Parent.ToStringConditions() if isinstance(self.Parent, dmGroup) else ''
             if strTemp != '': 
-                strReport = System.Environment.NewLine + 'Book: ' + book.CaptionWithoutTitle + ' was touched. ' + System.Environment.NewLine + self.ToString() + System.Environment.NewLine + strTemp
+                strReport = System.Environment.NewLine + 'Book: ' + book.CaptionWithoutTitle + ' was touched. ' + System.Environment.NewLine + grpConditionReport + self.ToString() + System.Environment.NewLine + strTemp
             
         return strReport
 
@@ -587,12 +596,7 @@ class dmRuleset(dmNode):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmRuleset:HumanizeRules()'
         strReturn = '('
 
-        ruleCount = 0
-        while ruleCount < len(self.Rules):
-            strReturn = strReturn + self.Rules[ruleCount].ToString()
-            ruleCount = ruleCount + 1
-            if ruleCount < len(self.Rules): strReturn = strReturn + ' ' + self.RulesetMode + ' '
-
+        strReturn += self.HumanizeRulesConditionOnly()
         strReturn = strReturn + ' => '
 
         actionCount = 0
@@ -602,6 +606,15 @@ class dmRuleset(dmNode):
             actionCount = actionCount + 1
 
         strReturn = strReturn + ')'
+        return strReturn
+
+    def HumanizeRulesConditionOnly(self):
+        strReturn = ''
+        ruleCount = 0
+        while ruleCount < len(self.Rules):
+            strReturn = strReturn + self.Rules[ruleCount].ToString()
+            ruleCount = ruleCount + 1
+            if ruleCount < len(self.Rules): strReturn = strReturn + ' ' + self.RulesetMode + ' '
         return strReturn
 
     def ToXML(self, elementName):
