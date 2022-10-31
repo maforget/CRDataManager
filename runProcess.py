@@ -18,6 +18,7 @@ class runProcess(Form):
         self.Collection = collection
         self.TotalRulesets = 0
         self.countRuleset = 0
+        self.BookReport = ''
         pass
         
     def InitializeComponent(self):
@@ -176,19 +177,18 @@ class runProcess(Form):
                 self._bgwProcess.ReportProgress((100 / len(books)) * count + 1, [count, books[count]])
                 if dmGlobals.TraceGeneralMessages: print 'Processing Ruleset Collection'
                 try:
-                    bookReport = collection.ProcessBook(books[count], self._bgwProcess)
+                    collection.ProcessBook(books[count], self._bgwProcess)
                 except Exception as er:
                     #report errors instead
-                    bookReport = ''
                     strReport = 'Book: ' + books[count].CaptionWithoutTitle + ' had an unexpected error occured when processing it' + System.Environment.NewLine
                     strReport = strReport + '    Error: ' + er.message
-                if bookReport != '':
+                if self.BookReport != '' or self.BookReport != None:
                     #self.AddToTreeView(books[count], bookReport)
-                    strReport = dmGlobals.AppendReport(strReport, bookReport)
+                    strReport = dmGlobals.AppendReport(strReport, self.BookReport)
                     bookTouchCount = bookTouchCount + 1
                     fieldTouchCount = fieldTouchCount + dmGlobals.GetTouchCount(books[count], tmpDic)
             count = count + 1
-
+            self.BookReport = ''
 
         #add touch count to log
         strReport = strReport + System.Environment.NewLine + System.Environment.NewLine + bookTouchCount.ToString() + ' Books were modified. ' + fieldTouchCount.ToString() + ' Values were changed'
@@ -262,6 +262,7 @@ class runProcess(Form):
         bookReport = userState[2]
 
         if bookReport:
+            self.BookReport += bookReport
             if not self._treeView1.Nodes.ContainsKey(book.Id.ToString()):
                 tn = TreeNode(book.CaptionWithoutTitle)
                 tn.Name = book.Id.ToString()
