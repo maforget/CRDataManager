@@ -201,6 +201,7 @@ class dmContainer(dmNode):
                 if dmGlobals.TraceGeneralMessages: print 'verifying user has not cancelled process...'
                 if not bgWorker.CancellationPending:
                     strGroupReport = group.ProcessBook(book, bgWorker)
+                    bgWorker.ReportProgress(0, [999999, book, strGroupReport, group])
                     if strGroupReport != None and strGroupReport != '':
                         strReport = dmGlobals.AppendReport(strReport, strGroupReport)
                 else:
@@ -790,7 +791,7 @@ class dmParameters(dmNode):
 
             pass
         return theVal 
-		
+
     def GetStringValue(self, book, strField):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmParamaters.GetFieldValue(book, strFieldName)'
         objReturn = None
