@@ -269,7 +269,8 @@ class runProcess(Form):
                 self._treeView1.Nodes.Add(tn)
 
             if userState[3]:
-                str = 'Ruleset: ' + userState[3].Name
+                str = 'Group: ' if isinstance(userState[3], dmGroup)  else 'Ruleset: '
+                str += userState[3].Name
                 tn = TreeNode(str)
                 tn.Name = book.CaptionWithoutTitle + str
                 tn.NodeFont = Font(self._treeView1.Font, FontStyle.Regular)
