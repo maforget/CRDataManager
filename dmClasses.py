@@ -597,7 +597,8 @@ class dmRuleset(dmNode):
 
         actionCount = 0
         while actionCount < len(self.Actions):
-            strReturn = strReturn + self.Actions[actionCount].ToString()
+            seperator = ' // ' if actionCount > 0 else ''
+            strReturn = strReturn + seperator + self.Actions[actionCount].ToString()
             actionCount = actionCount + 1
 
         strReturn = strReturn + ')'
