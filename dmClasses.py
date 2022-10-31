@@ -413,7 +413,7 @@ class dmGroup(dmContainer):
 
         if self.MeetsConditions(book):
             if dmGlobals.TraceGeneralMessages: print 'Book: \'' + book.CaptionWithoutTitle + '\' Meets conditions, Processing.'
-            strReport = dmContainer.ProcessBook(self, book, bgWorker)
+            strReportBook = dmContainer.ProcessBook(self, book, bgWorker)
             
             #groupReport
             CompiledReport = ''
