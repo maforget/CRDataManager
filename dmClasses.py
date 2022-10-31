@@ -425,7 +425,7 @@ class dmGroup(dmContainer):
                 if strTempReport != None and strTempReport != '':
                     CompiledReport = CompiledReport + strTempReport
             if CompiledReport != '':
-                CompiledReport = 'Group: \'' + self.Name + '\' touched book: ' + book.CaptionWithoutTitle + System.Environment.NewLine + CompiledReport
+                CompiledReport = 'Book: ' + book.CaptionWithoutTitle + ' was touched. ' + System.Environment.NewLine + self.ToString() + System.Environment.NewLine + CompiledReport
                 strReport = System.Environment.NewLine + CompiledReport
         else:
             if dmGlobals.TraceGeneralMessages: print 'Conditions set forth by filters of group\'' + self.Name + '\' not met, skiping group.'
@@ -574,7 +574,7 @@ class dmRuleset(dmNode):
             #create a dictionary of values
             strTemp = self.ApplyActions(book)
             if strTemp != '': 
-                strReport = System.Environment.NewLine + 'Book: ' + book.CaptionWithoutTitle + ' was touched. ' + self.ToString() + System.Environment.NewLine + strTemp
+                strReport = System.Environment.NewLine + 'Book: ' + book.CaptionWithoutTitle + ' was touched. ' + System.Environment.NewLine + self.ToString() + System.Environment.NewLine + strTemp
             
         return strReport
 
