@@ -153,7 +153,7 @@ def CRStringToList(strList):
         return strList.Split(Array[str](CRLISTDELIMITER), StringSplitOptions.RemoveEmptyEntries)
 
 def ListTOCRString(list):
-    return CRLISTDELIMITER.join([str(x) for x in list])
+    return CRLISTDELIMITER.join([unicode(x) for x in list])
 
 def DMStringToList(strList):
         return strList.split(DMLISTDELIMITER)
