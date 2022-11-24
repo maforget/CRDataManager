@@ -1262,7 +1262,7 @@ class dmRule(dmParameters):
     def NotRange(self, book):
         """Only applicable with numeric, psuedo numeric, and date"""
         if dmGlobals.TraceFunctionMessages: print 'Method: dmRule:NotRange(book)'
-        return not Range(book)
+        return not self.Range(book)
 
     def RegEx(self, book):
         """Only applicable with string"""
