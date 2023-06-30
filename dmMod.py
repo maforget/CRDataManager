@@ -16,6 +16,7 @@ import runProcess
 from dmClasses import *
 from System.Diagnostics import Process
 from runProcess import runProcess
+from frmProfile import frmProfile
 # this handles unicode encoding:
 bodyname = System.Text.Encoding.Default.BodyName
 sys.setdefaultencoding(bodyname)
@@ -56,9 +57,11 @@ def dmRunConfig():
 #@Hook	Books
 # ============================================================================
 def dmRunProcess(books):
-	if File.Exists(dmGlobals.DATFILE):
+	form = frmProfile(dmGlobals.FOLDER)
+	form.ShowDialog(ComicRack.MainWindow)
+	if File.Exists(form.ChosenProfile):
 		if len(books) > 0:
-			collection = dmCollection(dmGlobals.DATFILE)
+			collection = dmCollection(form.ChosenProfile)
 			processor = runProcess(books,collection)
 			processor.ShowDialog(ComicRack.MainWindow)
 			processor.Dispose()
@@ -68,6 +71,7 @@ def dmRunProcess(books):
 	else:
 		System.Windows.Forms.MessageBox.Show("There is no Ruleset Collection to process.\r\nPlease use configuration to set up your rules", "No Ruleset Defined", System.Windows.Forms.MessageBoxButtons.OK)
 	
+	form.Dispose()
 	pass
 
 def dmAutoCreateRules(books):
