@@ -1,5 +1,6 @@
 # crDataManager: The ComicRack Data Manager
 [Download here](https://github.com/maforget/CRDataManager/releases/download/2.07.03.816/Data.Manager_v2.07.03.816.crplugin)  
+[Nightly here](https://github.com/maforget/CRDataManager/releases/tag/nightly)
 
 ### docdoom & T3KN0Gh057 proudly present the CR Data Manager, new fixes by maforget.
 
