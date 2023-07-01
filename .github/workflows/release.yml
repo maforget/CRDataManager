@@ -47,4 +47,4 @@ jobs:
           draft: true
           prerelease: false
           commit: ${{ github.ref_name }}
-          tag: 'v${{ github.event.inputs.version }}'
+          tag: '${{ github.event.inputs.version }}'
