@@ -10,7 +10,7 @@ on:
           description: 'Version'
           required: true
           type: string
-          default: 'X.Y{.Z}'
+          default: 'W.X.Y.Z'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
