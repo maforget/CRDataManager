@@ -5,10 +5,12 @@ import dmClasses
 
 from System.Drawing import *
 from System.Windows.Forms import *
+from System import DateTime
 from dmClasses import *
 
 import dmGlobals
 from dmGlobals import *
+from iniReadWrite import *
 
 class runProcess(Form):
     def __init__(self, books, collection):
@@ -188,6 +190,9 @@ class runProcess(Form):
                     strReport = dmGlobals.AppendReport(strReport, self.BookReport)
                     bookTouchCount = bookTouchCount + 1
                     fieldTouchCount = fieldTouchCount + dmGlobals.GetTouchCount(books[count], tmpDic)
+                    if ReadKeyAsBool(dmGlobals.USERINI,  'WriteDataManagerProcessed'):
+                       books[count].SetCustomValue('DataManager.processed', DateTime.Now.ToString('yyyy-MM-dd HH:mm:ss'))
+
             count = count + 1
             self.BookReport = ''
 
