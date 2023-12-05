@@ -1081,20 +1081,24 @@ class dmRule(dmParameters):
         return not self.StartsWith(book)
 
     def StartsWithAnyOf(self, book):
-        """Only applicable with string"""
+        """Only applicable with string and list"""
         if dmGlobals.TraceFunctionMessages: print 'Method: dmRule:StartsWithAnyOf(book)'
         
         getValue = self.GetFieldValue(book, self.Field) #get Value from book
         compareValue = self.ReplaceReferenceStrings(self.Value, book).split(dmGlobals.DMLISTDELIMITER)  #value to compare
         
-        for compareItem in compareValue: #compare each item until truth found 
-            if getValue.lower().startswith(compareItem.lower()): #check if list item at the beginning of string
-                return True # return true at first instance of match
-
-        return False
+        for compareItem in compareValue:
+            if self.Field in dmGlobals.FIELDSLIST: #compare list against list
+                for getItem in getValue: #compare list items as lowercase
+                    if getItem.lower().startswith(compareItem.lower()):
+                        return True #return true at first instance of match
+            else: #compare list against string
+                if getValue.lower().startswith(compareItem.lower()): #check if list item at the beginning of string
+                    return True # return true at first instance of match
+        return False #all else failing return false
 
     def NotStartsWithAnyOf(self, book):
-        """Only applicable with string"""
+        """Only applicable with string and list"""
         if dmGlobals.TraceFunctionMessages: print 'Method: dmRule:NotNotStartsWithAnyOf(book)'
         return not self.StartsWithAnyOf(book)
 
