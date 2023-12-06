@@ -944,13 +944,17 @@ class dmRule(dmParameters):
         return not self.Is(book) #return inverse of 'Is(book)'
 
     def IsAnyOf(self, book):
-        """Available for string languageISO, psuedonumeric, and numeric"""
+        """Available for string languageISO, psuedonumeric, numeric and list"""
         if dmGlobals.TraceFunctionMessages: print 'Method: dmRule:IsAnyOf(book)'
                 
         getValue = self.GetFieldValue(book, self.Field) #get Value from book
         compareValue = self.ReplaceReferenceStrings(self.Value, book).split(dmGlobals.DMLISTDELIMITER)  #value to compare as list
        
         for word in compareValue:
+            if self.Field in dmGlobals.FIELDSLIST: #search as string list
+                for getItem in getValue: #compare list items as lowercase
+                    if getItem.lower() == word.lower(): #compare lowercase
+                        return True
             if isinstance(getValue, str): #if dealing with string
                 if getValue.lower() == word.lower(): #compare lowercase
                     return True
