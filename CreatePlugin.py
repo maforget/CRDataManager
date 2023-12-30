@@ -72,8 +72,8 @@ def get_plugin_name():
     
     name = thedict["Name"]
     version = thedict["Version"]
-    # desktop = os.path.expanduser("~/Desktop")
-    dir = os.path.dirname(__file__)
+    dir = os.path.expanduser("~/Desktop")
+    # dir = os.path.dirname(__file__)
     out_name = os.path.join(dir, f"{name}_v{version}.crplugin")
     print(out_name)
     return out_name
