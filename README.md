@@ -1,3 +1,5 @@
+### You should consider using [ComicRack Community Edition](https://github.com/maforget/ComicRackCE). And if you can please contribute to the project.
+
 # crDataManager: The ComicRack Data Manager
 [Download here](https://github.com/maforget/CRDataManager/releases/download/2.07.03.816/Data.Manager_v2.07.03.816.crplugin)  
 [Nightly here](https://github.com/maforget/CRDataManager/releases/tag/nightly)
