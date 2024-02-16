@@ -106,9 +106,12 @@ ALLOWEDKEYMODIFIERSCUSTOM = ReadKeyAsStringList(INIFILE, 'allowedKeyModifierStri
 ALLOWEDVALMODIFIERSCUSTOM = ReadKeyAsStringList(INIFILE, 'allowedValModifierString')
 
 FIELDSNUMERIC = ReadKeyAsStringList(INIFILE, 'numericalKeys')
-FIELDSPSUEDONUMERIC = ReadKeyAsStringList(INIFILE, 'pseudoNumericalKeys')
 ALLOWEDKEYMODIFIERSNUMERIC = ReadKeyAsStringList(INIFILE, 'allowedKeyModifiersNumeric')
 ALLOWEDVALMODIFIERSNUMERIC = ReadKeyAsStringList(INIFILE, 'allowedValModifiersNumeric')
+
+FIELDSPSUEDONUMERIC = ReadKeyAsStringList(INIFILE, 'pseudoNumericalKeys')
+ALLOWEDKEYMODIFIERSPSEUDONUMERIC = ReadKeyAsStringList(INIFILE, 'allowedKeyModifiersPseudoNumeric')
+ALLOWEDVALMODIFIERSPSEUDONUMERIC = ReadKeyAsStringList(INIFILE, 'allowedValModifiersPseudoNumeric')
 
 REGEXVARREPLACEKEYS = ReadKeyAsStringList(INIFILE, 'regExVarReplaceFields')
 
@@ -263,7 +266,7 @@ def ValidKeyModifiers(strKey):
         elif KeyFieldType(strKey) == 'NUMERIC':
                 strListReturn = ALLOWEDKEYMODIFIERSNUMERIC
         elif KeyFieldType(strKey) == 'PSUEDONUMERIC':
-                strListReturn = ALLOWEDKEYMODIFIERSNUMERIC
+                strListReturn = ALLOWEDKEYMODIFIERSPSEUDONUMERIC
         elif KeyFieldType(strKey) == 'LANGUAGEISO':
                 strListReturn = ALLOWEDKEYMODIFIERSLANGUAGEISO
         return strListReturn
@@ -283,7 +286,7 @@ def ValidValModifiers(strKey):
         elif KeyFieldType(strKey) == 'NUMERIC':
                 strListReturn = ALLOWEDVALMODIFIERSNUMERIC
         elif KeyFieldType(strKey) == 'PSUEDONUMERIC':
-                strListReturn = ALLOWEDVALMODIFIERSNUMERIC
+                strListReturn = ALLOWEDVALMODIFIERSPSEUDONUMERIC
         elif KeyFieldType(strKey) == 'LANGUAGEISO':
                 strListReturn = ALLOWEDVALMODIFIERSLANGUAGEISO        
         if strKey in REGEXVARREPLACEKEYS:
