@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
     
   workflow_dispatch:
 
@@ -35,7 +33,6 @@ jobs:
         id: get_filepath
         run: |
           echo "file_path=$(python CreatePlugin.py)" >> $GITHUB_OUTPUT
-          # echo "::set-output name=file_path::$(python CreatePlugin.py)"
           
       - name: Update git tag
         run: |
