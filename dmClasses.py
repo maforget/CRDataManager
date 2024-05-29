@@ -782,7 +782,7 @@ class dmParameters(dmNode):
 
         theVal = strValue
         try:
-            if FieldValue in dmGlobals.ALLOWEDVALS:
+            if FieldValue in dmGlobals.ALLOWEDKEYS:
                 if FieldValue in dmGlobals.FIELDSLIST and not dmGlobals.IsList(strValue):
                     theVal = filter(None, strValue.split(dmGlobals.CRLISTDELIMITER))
                 elif FieldValue in dmGlobals.FIELDSBOOL and not dmGlobals.IsBool(strValue):
