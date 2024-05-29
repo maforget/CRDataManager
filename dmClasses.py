@@ -675,7 +675,7 @@ class dmParameters(dmNode):
         
         #validation for Rules
         elif isinstance(self, dmRule):
-            if (not self.Field in dmGlobals.ALLOWEDVALS):
+            if (not self.Field in dmGlobals.ALLOWEDKEYS):
                 bReturn = False
             if not self.Modifier in dmGlobals.ValidValModifiers(self.Field):
                 bReturn = False
