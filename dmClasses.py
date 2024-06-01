@@ -1313,7 +1313,7 @@ class dmAction(dmParameters):
         newVal = newValue
 
         strReport = ''            
-        if FieldValue in dmGlobals.FIELDSLIST:
+        if FieldValue in dmGlobals.FIELDSLIST and dmGlobals.IsList(newVal) :
             if dmGlobals.SortLists:
                 newVal.sort()
             newVal = dmGlobals.CRLISTDELIMITER.join(newVal)
