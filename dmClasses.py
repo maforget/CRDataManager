@@ -1389,14 +1389,14 @@ class dmAction(dmParameters):
         newVal = getValue
 
         if self.Field in dmGlobals.FIELDSLIST:
-            addItem = True
             for value in setValue:
+                addItem = True
                 for existingItem in newVal:
                     if value.lower() == existingItem.lower():
                         addItem = False
                         break
-            if addItem:
-                newVal.Add(value)
+                if addItem:
+                    newVal.Add(value)
         else: #since this is only a valid modifier for list and string assume string            
             for item in setValue:
                 newVal = newVal + item
