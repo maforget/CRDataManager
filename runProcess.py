@@ -173,7 +173,7 @@ class runProcess(Form):
         dmGlobals.WriteStartTime()
 
         self.TotalRulesets = self.getTotalNumberOfRuleSet(collection)
-        while count < len(books):
+        while count < len(books) and  not self._bgwProcess.CancellationPending:
             tmpDic = dmGlobals.CreateBookDict(books[count])
             if not self._bgwProcess.CancellationPending:
                 self._bgwProcess.ReportProgress((100 / len(books)) * count + 1, [count, books[count]])
