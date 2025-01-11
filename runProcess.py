@@ -21,6 +21,8 @@ class runProcess(Form):
         self.TotalRulesets = 0
         self.countRuleset = 0
         self.BookReport = ''
+        self.dtStart = System.DateTime.Now
+        self.MessageShown = False
         pass
         
     def InitializeComponent(self):
@@ -169,7 +171,6 @@ class runProcess(Form):
         if System.IO.File.Exists(dmGlobals.LOGFILE):
             System.IO.File.Delete(dmGlobals.LOGFILE)
 
-        dtStart = System.DateTime.Now
         dmGlobals.WriteStartTime()
 
         self.TotalRulesets = self.getTotalNumberOfRuleSet(collection)
@@ -205,8 +206,9 @@ class runProcess(Form):
             System.IO.File.WriteAllText(dmGlobals.LOGFILE, strReport)
         
         dmGlobals.WriteEndTime()
-        duration = System.DateTime.Now - dtStart
+        duration = System.DateTime.Now - self.dtStart
         strDuration = duration.ToString('hh\:mm\:ss\.ffff')
+        # MessageBox.Show("Ended: " + strDuration)
         dmGlobals.WriteDurationtime(strDuration)
 
         pass
@@ -231,6 +233,12 @@ class runProcess(Form):
     def BgwProcessProgressChanged(self, sender, e):
         progress = e.ProgressPercentage
         self.SetProgress(progress, e.UserState)
+        
+        if progress >= 100 and not self.MessageShown:
+            self.MessageShown = False
+            duration = System.DateTime.Now - self.dtStart
+            strDuration = duration.ToString('hh\:mm\:ss\.ffff')
+            dmGlobals.Write100PercentDurationTime(strDuration)
         pass
     
     def SetProgress(self, progress, userState):

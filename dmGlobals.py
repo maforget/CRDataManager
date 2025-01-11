@@ -368,6 +368,9 @@ def WriteStartTime():
 def WriteEndTime():
     WriteKey(USERINI, 'LastProcessEnd', System.DateTime.Now.ToString('yyyy/MM/dd hh:mm:ss'))
 
+def Write100PercentDurationTime(strDuration):
+    WriteKey(USERINI, '100PercentDuration', strDuration)
+
 def WriteDurationtime(strDuration):
     WriteKey(USERINI, 'LastProcessDuration', strDuration)
 
