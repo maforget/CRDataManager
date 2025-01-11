@@ -235,7 +235,7 @@ class runProcess(Form):
         self.SetProgress(progress, e.UserState)
         
         if progress >= 100 and not self.MessageShown:
-            self.MessageShown = False
+            self.MessageShown = True
             duration = System.DateTime.Now - self.dtStart
             strDuration = duration.ToString('hh\:mm\:ss\.ffff')
             dmGlobals.Write100PercentDurationTime(strDuration)
