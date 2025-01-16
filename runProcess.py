@@ -185,21 +185,19 @@ class runProcess(Form):
         dtStart = System.DateTime.Now
         dmGlobals.WriteStartTime()
 
-        self.TotalRulesets = self.getTotalNumberOfRuleSet(collection)
         while count < len(books) and  not self._bgwProcess.CancellationPending:
             tmpDic = dmGlobals.CreateBookDict(books[count])
             if not self._bgwProcess.CancellationPending:
-                self._bgwProcess.ReportProgress((100 / len(books)) * count + 1, [count, books[count]])
+                self._bgwProcess.ReportProgress((100.0 / len(books)) * count + 1, [count, books[count]])
                 if dmGlobals.TraceGeneralMessages: print 'Processing Ruleset Collection'
                 try:
-                    collection.ProcessBook(books[count], self._bgwProcess)
+                    bookReport, detailedReports = collection.ProcessBook(books[count], self._bgwProcess)
                 except Exception as er:
                     #report errors instead
                     strError = 'Book: ' + books[count].CaptionWithoutTitle + ' had an unexpected error occured when processing it' + System.Environment.NewLine
                     strError += '    Error: ' + er.message + System.Environment.NewLine
                     self.BookReport += strError
                 if self.BookReport != '' or self.BookReport != None:
-                    #self.AddToTreeView(books[count], bookReport)
                     strReport = dmGlobals.AppendReport(strReport, self.BookReport)
                     bookTouchCount = bookTouchCount + 1
                     fieldTouchCount = fieldTouchCount + dmGlobals.GetTouchCount(books[count], tmpDic)
@@ -222,82 +220,48 @@ class runProcess(Form):
         strDuration = duration.ToString('hh\:mm\:ss\.ffff')
         dmGlobals.WriteDurationtime(strDuration)
 
-        pass
-
-    def getTotalNumberOfRuleSet(self, element):
-        count = 0
-
-        grp = element.Groups
-        ruleSet = element.Rulesets
-
-        if isinstance(ruleSet, list):
-            count += len(ruleSet)
-
-        if isinstance(grp, list):
-            for each_element in grp:
-                count += self.getTotalNumberOfRuleSet(each_element)
-                if isinstance(each_element.FiltersAndDefaults, dmRuleset):
-                    count += 1
-
-        return count
-
     def BgwProcessProgressChanged(self, sender, e):
         progress = e.ProgressPercentage
         self.SetProgress(progress, e.UserState)
-        pass
     
     def SetProgress(self, progress, userState):
         if self.InvokeRequired:
             self.Invoke(self.SetProgress, [progress, userState])
             return
 
-        states = len(userState)
-        count = userState[0]
-        booklen = len(self.Books)
-        max = self.TotalRulesets * booklen
-
-        if max > 0:
-            if count == 999999:
-                self.countRuleset += 1
-                progress = (self.countRuleset * 100.0) / max
-            else:
-                progress = ((self.TotalRulesets * count) * 100) / max
-
-        self._progressBar1.Value = progress
-        if not isinstance(userState[1], str):
-            self._label2.Text = userState[1].CaptionWithoutTitle
-            if states >= 3:
-                self.AddToTreeView(userState)
-        #if isinstance(userState[1], str):
-            #self._textBox1.Text = userState[1]
-        #else:
-            #self._label2.Text = userState[1].CaptionWithoutTitle
-
-        self._progressBar1.Value = progress
-        if count != 999999 and count < booklen: self._label1.Text = 'Processing ' + (count + 1).ToString() + ' of ' + booklen.ToString() + ' books'
-        pass
+        if progress < 0:
+            self.AddToTreeView(userState)
+        else:
+            count = userState[0]
+            booklen = len(self.Books)
+            self._progressBar1.Value = progress
+            if not isinstance(userState[1], str): self._label2.Text = userState[1].CaptionWithoutTitle
+            self._label1.Text = 'Processing ' + count.ToString() + ' of ' + booklen.ToString() + ' books'
 
     def AddToTreeView(self, userState):
-        book = userState[1]
-        bookReport = userState[2]
+        book = userState[0]
+        bookReport = userState[1]
+        detailedReports = userState[2]
 
-        if bookReport:
-            self.BookReport += bookReport
-            if not self._treeView1.Nodes.ContainsKey(book.Id.ToString()):
-                tn = TreeNode(book.CaptionWithoutTitle)
-                tn.Name = book.Id.ToString()
-                tn.Tag = bookReport
-                self._treeView1.Nodes.Add(tn)
+        if detailedReports:
+            bookNode = self._treeView1.Nodes[book.Id.ToString()]
 
-            if userState[3]:
-                str = 'Group: ' if isinstance(userState[3], dmGroup)  else 'Ruleset: '
-                str += userState[3].Name
+            if not bookNode:
+                bookNode = TreeNode(book.CaptionWithoutTitle)
+                bookNode.Name = book.Id.ToString()
+
+            for reportType, name, report in detailedReports:
+                str = reportType + ": " + name
+                bookReport += report
                 tn = TreeNode(str)
                 tn.Name = book.CaptionWithoutTitle + str
                 tn.NodeFont = Font(self._treeView1.Font, FontStyle.Regular)
-                tn.Tag = bookReport
-                self._treeView1.Nodes[book.Id.ToString()].Nodes.Add(tn)
-                self._treeView1.Nodes[book.Id.ToString()].Expand()
+                tn.Tag = report
+                bookNode.Nodes.Add(tn)
+                # bookNode.Expand()
+
+            self.BookReport += bookReport
+            self._treeView1.Nodes.Add(bookNode)
 
     def BtnCancelClick(self,sender, e):
         if self._bgwProcess.IsBusy:
@@ -309,13 +273,13 @@ class runProcess(Form):
         self._textBox1.Text = ""
         if len(e.Node.Nodes) > 0:
             for x in e.Node.Nodes:
-                self._textBox1.Text += x.Tag
+                self._textBox1.Text += x.Tag + System.Environment.NewLine
                 pass
         else:
             self._textBox1.Text = e.Node.Tag
 
     def BgwProcessRunWorkerCompleted(self, sender, e):
-    	self._btnCancel.Text = 'Close'
+        self._btnCancel.Text = 'Close'
 
     def RunProcessShown(self, sender, e):
         if len(self.Books) > 0:

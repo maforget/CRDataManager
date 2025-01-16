@@ -194,18 +194,22 @@ class dmContainer(dmNode):
     def ProcessBook(self, book, bgWorker):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmContainer:ProcessBook(book, backgroundWorker)'
         strReport = ''
+        detailedReports = []
 
         if not bgWorker.CancellationPending:
             if dmGlobals.TraceGeneralMessages: print "Processing child groups..."
             for group in self.Groups:
                 if dmGlobals.TraceGeneralMessages: print 'verifying user has not cancelled process...'
                 if not bgWorker.CancellationPending:
-                    strGroupReport = group.ProcessBook(book, bgWorker)
-                    bgWorker.ReportProgress(0, [999999, book, strGroupReport, group])
-                    if strGroupReport != None and strGroupReport != '':
+                    strGroupReport, strGroupActionsReport, groupDetailedReport = group.ProcessBook(book, bgWorker)
+                    if strGroupReport or len(groupDetailedReport) > 0:
+                        detailedReports.extend(groupDetailedReport)
                         strReport = dmGlobals.AppendReport(strReport, strGroupReport)
+                    if strGroupActionsReport:
+                        detailedReports.append(('Group', group.Name, strGroupActionsReport))
+                        strReport = dmGlobals.AppendReport(strReport, strGroupActionsReport)
                 else:
-                    strReport = strReport + System.Environment.NewLine + 'Process cancelled by user'
+                    strReport += System.Environment.NewLine + 'Process cancelled by user'
                     if dmGlobals.TraceGeneralMessages: 
                         print 'Process cancelled by user'
                         print 'backing out of process...'
@@ -216,8 +220,8 @@ class dmContainer(dmNode):
                 if not bgWorker.CancellationPending:
                     if dmGlobals.TraceGeneralMessages: print 'Processing book...'
                     strRulesetReport = ruleset.ProcessBook(book, bgWorker)
-                    bgWorker.ReportProgress(0, [999999, book, strRulesetReport, ruleset])
-                    if strRulesetReport != None and strRulesetReport != '':
+                    if strRulesetReport:
+                        detailedReports.append(('Ruleset', ruleset.Name, strRulesetReport))
                         strReport = dmGlobals.AppendReport(strReport, strRulesetReport)
                 else:
                     if dmGlobals.TraceGeneralMessages: 
@@ -230,7 +234,7 @@ class dmContainer(dmNode):
                 print 'Process cancelled by user'
                 print 'backing out of process...'
         if dmGlobals.TraceFunctionMessages: print 'Exiting process dmContainer:ProcessBook(book, bgWorker)'
-        return strReport
+        return strReport, detailedReports
 
     def ToXML(self, elementName):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmContainer:ToXML(stringElementName)'
@@ -324,14 +328,18 @@ class dmCollection(dmContainer):
             print 'Method: dmCollection:ProcessBook(book, backgroundWorker)'
 
         strReport = ''
+        detailedReports = []
         
         if not bgWorker.CancellationPending:
-            strReport = dmContainer.ProcessBook(self, book, bgWorker)
+            strReport, detailedReports = dmContainer.ProcessBook(self, book, bgWorker)
+            if strReport or len(detailedReports) > 0:
+                bgWorker.ReportProgress(-1, [book, strReport, detailedReports])
+                pass
             
         if dmGlobals.TraceFunctionMessages:
             print 'Exiting Method: dmCollection:ProcessBook(book, backgroundWorker)'
 
-        return strReport
+        return strReport, detailedReports
         
     def ToXML(self, elementName):
         if dmGlobals.TraceFunctionMessages:
@@ -409,11 +417,13 @@ class dmGroup(dmContainer):
         if dmGlobals.TraceFunctionMessages:
             print 'Method: dmGroup:ProcessBook(book, backgroundWorker)'
 
-        strReport = ''
+        strActionsReport = ''
+        strBookReport = ''
+        detailedReport = []
 
         if self.MeetsConditions(book):
             if dmGlobals.TraceGeneralMessages: print 'Book: \'' + book.CaptionWithoutTitle + '\' Meets conditions, Processing.'
-            strReportBook = dmContainer.ProcessBook(self, book, bgWorker)
+            strBookReport, detailedReport = dmContainer.ProcessBook(self, book, bgWorker)
             
             #groupReport
             CompiledReport = ''
@@ -426,13 +436,13 @@ class dmGroup(dmContainer):
                     CompiledReport = CompiledReport + strTempReport
             if CompiledReport != '':
                 CompiledReport = 'Book: ' + book.CaptionWithoutTitle + ' was touched. ' + System.Environment.NewLine + self.ToString() + System.Environment.NewLine + CompiledReport
-                strReport = System.Environment.NewLine + CompiledReport
+                strActionsReport = System.Environment.NewLine + CompiledReport
         else:
             if dmGlobals.TraceGeneralMessages: print 'Conditions set forth by filters of group\'' + self.Name + '\' not met, skiping group.'
         
         if dmGlobals.TraceFunctionMessages: print 'Exiting Method: dmGroup:ProcessBook(book, backgroundWorker)'
         
-        return strReport
+        return strBookReport, strActionsReport, detailedReport
 
     def ToXML(self, elementName):
         if dmGlobals.TraceFunctionMessages: print 'Method: dmGroup:ToXML(stringElementName)'
