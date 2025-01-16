@@ -31,6 +31,7 @@ class runProcess(Form):
         self._label2 = System.Windows.Forms.Label()
         self._textBox1 = System.Windows.Forms.RichTextBox()
         self._Panel1 = System.Windows.Forms.Panel()
+        self._Panel2 = System.Windows.Forms.Panel()
         self._treeView1 = System.Windows.Forms.TreeView()
         self._splitContainer1 = System.Windows.Forms.SplitContainer()
         self._Panel1.SuspendLayout()
@@ -91,12 +92,13 @@ class runProcess(Form):
         # textBox1
         # 
         self._textBox1.BackColor = System.Drawing.SystemColors.Window
+        self._textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
         self._textBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        self._textBox1.Location = System.Drawing.Point(0, 0)
+        self._textBox1.Location = System.Drawing.Point(10, 10)
         self._textBox1.Margin = System.Windows.Forms.Padding(10)
         self._textBox1.Name = "textBox1"
         self._textBox1.ReadOnly = True
-        self._textBox1.Size = System.Drawing.Size(731, 517)
+        self._textBox1.Size = System.Drawing.Size(711, 497)
         self._textBox1.TabIndex = 3
         self._textBox1.Text = ""
         # 
@@ -110,6 +112,17 @@ class runProcess(Form):
         self._Panel1.Name = "Panel1"
         self._Panel1.Size = System.Drawing.Size(1168, 68)
         self._Panel1.TabIndex = 0
+        # 
+        # Panel2
+        # 
+        self._Panel2.BackColor = System.Drawing.SystemColors.Window
+        self._Panel2.Controls.Add(self._textBox1)
+        self._Panel2.Dock = System.Windows.Forms.DockStyle.Fill
+        self._Panel2.Location = System.Drawing.Point(0, 0)
+        self._Panel2.Name = "Panel2"
+        self._Panel2.Padding = System.Windows.Forms.Padding(10)
+        self._Panel2.Size = System.Drawing.Size(731, 517)
+        self._Panel2.TabIndex = 0
         # 
         # treeView1
         # 
@@ -133,7 +146,7 @@ class runProcess(Form):
         # 
         # splitContainer1.Panel2
         # 
-        self._splitContainer1.Panel2.Controls.Add(self._textBox1)
+        self._splitContainer1.Panel2.Controls.Add(self._Panel2)
         self._splitContainer1.Size = System.Drawing.Size(1162, 517)
         self._splitContainer1.SplitterDistance = 427
         self._splitContainer1.TabIndex = 5
