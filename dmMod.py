@@ -66,8 +66,6 @@ def dmRunProcess(books):
 			processor.ShowDialog(ComicRack.MainWindow)
 			processor.Dispose()
 			pass
-	elif File.Exists(dmGlobals.OLDDATFILE):
-		pass
 	else:
 		System.Windows.Forms.MessageBox.Show("There is no Ruleset Collection to process.\r\nPlease use configuration to set up your rules", "No Ruleset Defined", System.Windows.Forms.MessageBoxButtons.OK)
 	
