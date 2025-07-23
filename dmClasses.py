@@ -1470,14 +1470,12 @@ class dmAction(dmParameters):
                 for getItem in getValue:
                     if getItem.lower() == finditem.lower():
                         newList.Add(replaceitem)
-                        break 
                     else:
                         newList.Add(getItem)
             else:
                 for getItem in getValue:
                     if getItem == finditem:
                         newList.Add(replaceitem)
-                        break 
                     else:
                         newList.Add(getItem)           
             newValue = newList
