@@ -154,7 +154,7 @@ def IsFloat(value):
     return isinstance(value, float)
 
 def CRStringToList(strList):
-        return (x.strip for x in strList.Split(Array[str](CRLISTDELIMITER_SPLIT), StringSplitOptions.RemoveEmptyEntries))
+        return [x.strip() for x in strList.Split(Array[str](CRLISTDELIMITER_SPLIT), StringSplitOptions.RemoveEmptyEntries)]
 
 def ListTOCRString(list):
     return CRLISTDELIMITER_JOIN.join([unicode(x) for x in list])
@@ -475,7 +475,7 @@ class dmConversionError(dmException):
         pass
 
 def GetStringAsList(strList):
-    return (x.strip for x in strList.Split(CRLISTDELIMITER_SPLIT))
+    return [x.strip() for x in strList.Split(CRLISTDELIMITER_SPLIT)]
 
 class dmNodeCompileException(dmException):
     def __init__(self, strMessage, dmNodeParent):

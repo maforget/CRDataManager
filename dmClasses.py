@@ -794,7 +794,7 @@ class dmParameters(dmNode):
         try:
             if FieldValue in dmGlobals.ALLOWEDKEYS:
                 if FieldValue in dmGlobals.FIELDSLIST and not dmGlobals.IsList(strValue):
-                    theVal = filter(None,(x.strip for x in strValue.split(dmGlobals.CRLISTDELIMITER_SPLIT)))
+                    theVal = filter(None,[x.strip() for x in strValue.split(dmGlobals.CRLISTDELIMITER_SPLIT)])
                 elif FieldValue in dmGlobals.FIELDSBOOL and not dmGlobals.IsBool(strValue):
                     theVal = dmGlobals.StringToBool(strValue)
                 elif FieldValue in dmGlobals.FIELDSDATETIME and not dmGlobals.IsDateTime(strValue):
@@ -853,7 +853,7 @@ class dmParameters(dmNode):
         if strList == None or strList == '': 
             strList = []
         else:
-            strList = (x.strip for x in strList.split(dmGlobals.CRLISTDELIMITER_SPLIT))
+            strList = [x.strip() for x in strList.split(dmGlobals.CRLISTDELIMITER_SPLIT)]
         return strList
 
     def GetCustomField(self, book, strFieldName):
@@ -1466,7 +1466,7 @@ class dmAction(dmParameters):
         if self.Field in dmGlobals.FIELDSLIST:
             oldList = self.GetFieldValue(book, self.Field)
             newList = []
-            if not dmGlobals.COMPARE_CASE_SENSITIVE:
+            if dmGlobals.COMPARE_CASE_SENSITIVE:
                 for getItem in getValue:
                     if getItem.lower() == finditem.lower():
                         newList.Add(replaceitem)
@@ -1482,7 +1482,7 @@ class dmAction(dmParameters):
     
         else:
             idx = 0; idx2 = -1
-            if not dmGlobals.COMPARE_CASE_SENSITIVE:
+            if dmGlobals.COMPARE_CASE_SENSITIVE:
                 while finditem.lower() in newValue.lower():
                     idx = newValue.lower().find(finditem.lower()) #find the index of the value to replace
                     newValue = newValue.Remove(idx, len(finditem))
