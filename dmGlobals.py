@@ -29,7 +29,8 @@ GUIEXE = Path.Combine(FOLDER, 'crdmgui.exe')
 
 ################Set Constant variables##############
 
-CRLISTDELIMITER = ', '
+CRLISTDELIMITER_JOIN = ', '
+CRLISTDELIMITER_SPLIT = ','
 
 GROUPHEADER = '#@ GROUP '
 RULESETHEADER = '#@ NAME '
@@ -153,10 +154,10 @@ def IsFloat(value):
     return isinstance(value, float)
 
 def CRStringToList(strList):
-        return strList.Split(Array[str](CRLISTDELIMITER), StringSplitOptions.RemoveEmptyEntries)
+        return (x.strip for x in strList.Split(Array[str](CRLISTDELIMITER_SPLIT), StringSplitOptions.RemoveEmptyEntries))
 
 def ListTOCRString(list):
-    return CRLISTDELIMITER.join([unicode(x) for x in list])
+    return CRLISTDELIMITER_JOIN.join([unicode(x) for x in list])
 
 def DMStringToList(strList):
         return strList.split(DMLISTDELIMITER)
@@ -474,7 +475,7 @@ class dmConversionError(dmException):
         pass
 
 def GetStringAsList(strList):
-    return strList.Split(CRLISTDELIMITER)
+    return (x.strip for x in strList.Split(CRLISTDELIMITER_SPLIT))
 
 class dmNodeCompileException(dmException):
     def __init__(self, strMessage, dmNodeParent):

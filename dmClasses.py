@@ -794,7 +794,7 @@ class dmParameters(dmNode):
         try:
             if FieldValue in dmGlobals.ALLOWEDKEYS:
                 if FieldValue in dmGlobals.FIELDSLIST and not dmGlobals.IsList(strValue):
-                    theVal = filter(None, strValue.split(dmGlobals.CRLISTDELIMITER))
+                    theVal = filter(None,(x.strip for x in strValue.split(dmGlobals.CRLISTDELIMITER_SPLIT)))
                 elif FieldValue in dmGlobals.FIELDSBOOL and not dmGlobals.IsBool(strValue):
                     theVal = dmGlobals.StringToBool(strValue)
                 elif FieldValue in dmGlobals.FIELDSDATETIME and not dmGlobals.IsDateTime(strValue):
@@ -853,7 +853,7 @@ class dmParameters(dmNode):
         if strList == None or strList == '': 
             strList = []
         else:
-            strList = strList.split(dmGlobals.CRLISTDELIMITER)
+            strList = (x.strip for x in strList.split(dmGlobals.CRLISTDELIMITER_SPLIT))
         return strList
 
     def GetCustomField(self, book, strFieldName):
@@ -1326,8 +1326,8 @@ class dmAction(dmParameters):
         if FieldValue in dmGlobals.FIELDSLIST and dmGlobals.IsList(newVal) :
             if dmGlobals.SortLists:
                 newVal.sort()
-            newVal = dmGlobals.CRLISTDELIMITER.join(newVal)
-            previousVal = dmGlobals.CRLISTDELIMITER.join(previousVal)
+            newVal = dmGlobals.CRLISTDELIMITER_JOIN.join(newVal)
+            previousVal = dmGlobals.CRLISTDELIMITER_JOIN.join(previousVal)
         
         if FieldValue in dmGlobals.ALLOWEDVALS:
             try:
