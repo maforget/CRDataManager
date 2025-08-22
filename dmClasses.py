@@ -1283,10 +1283,10 @@ class dmRule(dmParameters):
         return not self.Range(book)
 
     def RegEx(self, book):
-        """Only applicable with string"""
         if dmGlobals.TraceFunctionMessages: print 'Method: dmRule:RegEx(book)'
 
         getValue = self.GetFieldValue(book, self.Field)
+        if not isinstance(getValue, str): getValue = dmGlobals.ToString(getValue) # convert to string
         compareValue = self.ReplaceReferenceStrings(self.Value, book)
 
         regExp = Regex(compareValue, RegexOptions.Singleline | RegexOptions.IgnoreCase)
@@ -1294,7 +1294,6 @@ class dmRule(dmParameters):
         return regExp.Match(getValue).Success
 
     def NotRegEx(self, book):
-        """Only applicable with string"""
         if dmGlobals.TraceFunctionMessages: print 'Method: dmRule:NotRegEx(book)'
         return not self.RegEx(book)
 
